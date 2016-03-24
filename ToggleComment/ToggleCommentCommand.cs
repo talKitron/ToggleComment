@@ -46,9 +46,9 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// Initializes the singleton instance of the command.
+        /// このコマンドのシングルトンのインスタンスを初期化します。
         /// </summary>
-        /// <param name="package">Owner package, not null.</param>
+        /// <param name="package">コマンドを提供するパッケージ</param>
         public static void Initialize(Package package)
         {
             Instance = new ToggleCommentCommand(package);
