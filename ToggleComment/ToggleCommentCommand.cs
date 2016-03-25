@@ -64,7 +64,7 @@ namespace ToggleComment
                 var selection = textDocument.Selection;
                 SelectLines(selection);
 
-                var regex = new Regex(@"^[\s]*//");
+                var regex = new Regex(@"^\s*//");
                 var isAllComment = selection.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                     .Where(x => string.IsNullOrWhiteSpace(x) == false)
                     .All(regex.IsMatch);
