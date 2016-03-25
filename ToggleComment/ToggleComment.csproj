@@ -74,7 +74,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\ToggleCommentCommand.png" />
-    <Content Include="Resources\ToggleCommentPackage.ico" />
+    <Content Include="Resources\Package.ico" />
     <VSCTCompile Include="ToggleCommentPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>

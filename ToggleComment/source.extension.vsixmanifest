@@ -5,6 +5,7 @@
     <DisplayName>Toggle Comment</DisplayName>
     <Description xml:space="preserve">This is a simple visual studio extension to comment/uncomment the selected lines.</Description>
     <License>LICENSE.txt</License>
+    <Icon>Resources\Package.ico</Icon>
     <PreviewImage>Resources\Preview.png</PreviewImage>
   </Metadata>
   <Installation>
