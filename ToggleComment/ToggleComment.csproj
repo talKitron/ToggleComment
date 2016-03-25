@@ -69,6 +69,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\Preview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\ToggleCommentCommand.png" />
     <Content Include="Resources\ToggleCommentPackage.ico" />
     <VSCTCompile Include="ToggleCommentPackage.vsct">
