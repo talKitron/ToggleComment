@@ -72,7 +72,11 @@
     </Bitmaps>
   </Commands>
 
-  <Symbols>
+  <KeyBindings>
+    <KeyBinding guid="guidToggleCommentPackageCmdSet" id="ToggleCommentCommandId" editor="GUID_TextEditorFactory" key1="0xBF" mod1="Control" />
+  </KeyBindings>
+
+  <Symbols>    
     <!-- This is the package guid. -->
     <GuidSymbol name="guidToggleCommentPackage" value="{9fb26121-a4a7-4f27-81c3-c713a2464345}" />
 
