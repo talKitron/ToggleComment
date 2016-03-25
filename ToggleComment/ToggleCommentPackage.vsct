@@ -51,7 +51,7 @@
         <Parent guid="guidToggleCommentPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke ToggleCommentCommand</ButtonText>
+          <ButtonText>Toggle Comment</ButtonText>
         </Strings>
       </Button>
     </Buttons>
