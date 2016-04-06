@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToggleComment", "ToggleComment\ToggleComment.csproj", "{EE69DC00-853D-4CFC-B492-C64C0832DBAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ToggleComment", "Test.ToggleComment\Test.ToggleComment.csproj", "{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
