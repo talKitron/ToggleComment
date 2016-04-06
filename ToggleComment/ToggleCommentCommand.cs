@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -26,6 +25,12 @@ namespace ToggleComment
         /// 選択された行のコメントを解除するコマンドです。
         /// </summary>
         private const string UNCOMMENT_SELECTION_COMMAND = "Edit.UncommentSelection";
+
+        /// <summary>
+        /// C# のコメントのパターンです。
+        /// </summary>
+        private readonly Lazy<CodeCommentPattern[]> commentPatterns =
+            new Lazy<CodeCommentPattern[]>(() => new[] { new CodeCommentPattern("//"), new CodeCommentPattern("/*", "*/") });
 
         /// <summary>
         /// コマンドメニューグループのIDです。
@@ -64,14 +69,17 @@ namespace ToggleComment
                 var selection = textDocument.Selection;
                 SelectLines(selection);
 
-                var regex = new Regex(@"^\s*//");
-                var isAllComment = selection.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(x => string.IsNullOrWhiteSpace(x) == false)
-                    .All(regex.IsMatch);
-
-                var command = isAllComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
+                var command = IsComment(selection.Text) ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
                 dte.ExecuteCommand(command);
             }
+        }
+
+        /// <summary>
+        /// 指定の文字列がコメントかどうかを判定します。
+        /// </summary>
+        private bool IsComment(string text)
+        {
+            return commentPatterns.Value.Any(x => x.IsComment(text));
         }
 
         /// <summary>
