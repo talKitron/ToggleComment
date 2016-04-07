@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace ToggleComment
 {
     /// <summary>
-    /// コードのコメントを表すパターンです
+    /// コードのコメントを表すパターンです。
     /// </summary>
     public class CodeCommentPattern
     {

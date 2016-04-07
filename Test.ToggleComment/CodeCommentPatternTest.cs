@@ -3,11 +3,14 @@ using ToggleComment;
 
 namespace Test.ToggleComment
 {
+    /// <summary>
+    /// <see cref="CodeCommentPattern"/>のテストクラスです。
+    /// </summary>
     [TestClass]
     public class CodeCommentPatternTest
     {
         [TestMethod]
-        public void IsCommentTest_CSLineComment()
+        public void IsCommentTest_LineComment()
         {
             var pattern = new CodeCommentPattern("//");
 
@@ -41,7 +44,7 @@ a
         }
 
         [TestMethod]
-        public void IsCommentTest_CSBlockComment()
+        public void IsCommentTest_BlockComment()
         {
             var pattern = new CodeCommentPattern("/*", "*/");
 
