@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using ToggleComment.Utils;
 
 namespace ToggleComment
 {
@@ -27,10 +29,9 @@ namespace ToggleComment
         private const string UNCOMMENT_SELECTION_COMMAND = "Edit.UncommentSelection";
 
         /// <summary>
-        /// C# のコメントのパターンです。
+        /// コメントのパターンです。
         /// </summary>
-        private readonly Lazy<CodeCommentPattern[]> commentPatterns =
-            new Lazy<CodeCommentPattern[]>(() => new[] { new CodeCommentPattern("//"), new CodeCommentPattern("/*", "*/") });
+        private readonly IDictionary<string, CodeCommentPattern[]> _patterns = new Dictionary<string, CodeCommentPattern[]>();
 
         /// <summary>
         /// コマンドメニューグループのIDです。
@@ -69,17 +70,51 @@ namespace ToggleComment
                 var selection = textDocument.Selection;
                 SelectLines(selection);
 
-                var command = IsComment(selection.Text) ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
-                dte.ExecuteCommand(command);
+                var patterns = _patterns.GetOrAdd(textDocument.Language, CreateCommentPatterns);
+                if (0 < patterns.Length)
+                {
+                    var text = selection.Text;
+                    var isComment = patterns.Any(x => x.IsComment(text));
+
+                    var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
+                    dte.ExecuteCommand(command);
+                }
             }
         }
 
         /// <summary>
-        /// 指定の文字列がコメントかどうかを判定します。
+        /// コードのコメントを表すパターンを作成します。
         /// </summary>
-        private bool IsComment(string text)
+        private static CodeCommentPattern[] CreateCommentPatterns(string language)
         {
-            return commentPatterns.Value.Any(x => x.IsComment(text));
+            switch (language)
+            {
+                case "CSharp":
+                    {
+                        return new[] { new CodeCommentPattern("//"), new CodeCommentPattern("/*", "*/") };
+                    }
+                case "XML":
+                case "XAML":
+                    {
+                        return new[] { new CodeCommentPattern("<!--", "-->") };
+                    }
+                case "PowerShell":
+                    {
+                        return new[] { new CodeCommentPattern("#") };
+                    }
+                case "SQL Server Tools":
+                    {
+                        return new[] { new CodeCommentPattern("--") };
+                    }
+                case "Basic":
+                    {
+                        return new[] { new CodeCommentPattern("'") };
+                    }
+                default:
+                    {
+                        return new CodeCommentPattern[0];
+                    }
+            }
         }
 
         /// <summary>

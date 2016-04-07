@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeCommentPatternTest.cs" />
+    <Compile Include="Utils\DictionaryExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToggleComment\ToggleComment.csproj">
