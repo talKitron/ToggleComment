@@ -95,11 +95,22 @@ namespace ToggleComment
                     }
                 case "XML":
                 case "XAML":
+                case "HTMLX":
                     {
                         return new[] { new CodeCommentPattern("<!--", "-->") };
                     }
+                case "JavaScript":
+                    {
+                        // MEMO : VS の UncommentSelection コマンドが JavaScript のブロックコメントに対応していない
+                        return new[] { new CodeCommentPattern("//") };
+                    }
+                case "CSS":
+                    {
+                        return new[] { new CodeCommentPattern("/*", "*/") };
+                    }
                 case "PowerShell":
                     {
+                        // MEMO : VS の UncommentSelection コマンドが PowerShell のブロックコメントに対応していない
                         return new[] { new CodeCommentPattern("#") };
                     }
                 case "SQL Server Tools":
