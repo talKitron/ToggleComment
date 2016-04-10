@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToggleComment;
 
 namespace Test.ToggleComment
@@ -23,24 +24,13 @@ namespace Test.ToggleComment
             Assert.IsFalse(pattern.IsComment("/"));
             Assert.IsFalse(pattern.IsComment("hoge//"));
 
-            Assert.IsTrue(pattern.IsComment(@"
-//
-//"));
-
-            Assert.IsTrue(pattern.IsComment(@"
-//
-
-//"));
-
-            Assert.IsFalse(pattern.IsComment(@"
-//
-a
-//"));
+            Assert.IsTrue(pattern.IsComment(string.Join(Environment.NewLine, "//", "//")));
+            Assert.IsTrue(pattern.IsComment(string.Join(Environment.NewLine, "//", string.Empty, "//")));
+            Assert.IsFalse(pattern.IsComment(string.Join(Environment.NewLine, "//", "hoge", "//")));
 
             Assert.IsFalse(pattern.IsComment(string.Empty));
             Assert.IsFalse(pattern.IsComment(" "));
-            Assert.IsFalse(pattern.IsComment(@"
-"));
+            Assert.IsFalse(pattern.IsComment(Environment.NewLine));
         }
 
         [TestMethod]
@@ -52,10 +42,7 @@ a
             Assert.IsTrue(pattern.IsComment(" /**/"));
             Assert.IsTrue(pattern.IsComment("/**/ "));
             Assert.IsTrue(pattern.IsComment("/*hoge*/"));
-
-            Assert.IsTrue(pattern.IsComment(@"/*
-
-*/"));
+            Assert.IsTrue(pattern.IsComment(string.Join(Environment.NewLine, "/*", "hoge", "*/")));
 
             Assert.IsFalse(pattern.IsComment("/*"));
             Assert.IsFalse(pattern.IsComment("*/"));
@@ -70,8 +57,7 @@ a
 
             Assert.IsFalse(pattern.IsComment(string.Empty));
             Assert.IsFalse(pattern.IsComment(" "));
-            Assert.IsFalse(pattern.IsComment(@"
-"));
+            Assert.IsFalse(pattern.IsComment(Environment.NewLine));
         }
     }
 }
