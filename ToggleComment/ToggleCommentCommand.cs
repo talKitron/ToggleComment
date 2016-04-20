@@ -68,12 +68,11 @@ namespace ToggleComment
             if (textDocument != null)
             {
                 var selection = textDocument.Selection;
-                SelectLines(selection);
+                var text = GetTextOfSelectedLines(selection);
 
                 var patterns = _patterns.GetOrAdd(textDocument.Language, CreateCommentPatterns);
                 if (0 < patterns.Length)
                 {
-                    var text = selection.Text;
                     var isComment = patterns.Any(x => x.IsComment(text));
 
                     var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
@@ -129,15 +128,16 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// 選択中の行を行選択状態にします。
+        /// Gets Text of selected lines. Selection remain untouched.
         /// </summary>
-        private static void SelectLines(TextSelection selection)
+        private static string GetTextOfSelectedLines(TextSelection selection)
         {
-            var bottom = selection.BottomLine;
+            var statrtOfSelectionLine = selection.TopPoint.CreateEditPoint();
+            statrtOfSelectionLine.StartOfLine();
+            var endOfSelectionLine = selection.BottomPoint.CreateEditPoint();
+            endOfSelectionLine.EndOfLine();
+            return statrtOfSelectionLine.GetText(endOfSelectionLine);
 
-            selection.MoveToDisplayColumn(selection.TopLine, 1, false);
-            selection.MoveToDisplayColumn(bottom, 0, true);
-            selection.EndOfLine(true);
         }
     }
 }
