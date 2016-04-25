@@ -67,12 +67,10 @@ namespace ToggleComment
             var textDocument = dte.ActiveDocument.Object("TextDocument") as TextDocument;
             if (textDocument != null)
             {
-                var selection = textDocument.Selection;
-                var text = GetTextOfSelectedLines(selection);
-
                 var patterns = _patterns.GetOrAdd(textDocument.Language, CreateCommentPatterns);
                 if (0 < patterns.Length)
                 {
+                    var text = GetTextOfSelectedLines(textDocument.Selection);
                     var isComment = patterns.Any(x => x.IsComment(text));
 
                     var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
@@ -128,16 +126,16 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// Gets Text of selected lines. Selection remain untouched.
+        /// 選択中の全ての行のテキストを取得します。
         /// </summary>
         private static string GetTextOfSelectedLines(TextSelection selection)
         {
-            var statrtOfSelectionLine = selection.TopPoint.CreateEditPoint();
-            statrtOfSelectionLine.StartOfLine();
-            var endOfSelectionLine = selection.BottomPoint.CreateEditPoint();
-            endOfSelectionLine.EndOfLine();
-            return statrtOfSelectionLine.GetText(endOfSelectionLine);
+            var startPoint = selection.TopPoint.CreateEditPoint();
+            startPoint.StartOfLine();
+            var endPoint = selection.BottomPoint.CreateEditPoint();
+            endPoint.EndOfLine();
 
+            return startPoint.GetText(endPoint);
         }
     }
 }
