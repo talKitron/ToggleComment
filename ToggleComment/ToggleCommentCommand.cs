@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using ToggleComment.Codes;
 using ToggleComment.Utils;
 
@@ -76,6 +78,20 @@ namespace ToggleComment
 
                     var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
                     dte.ExecuteCommand(command);
+                }
+                else
+                {
+                    try
+                    {
+                        dte.ExecuteCommand(COMMENT_SELECTION_COMMAND);
+                    }
+                    catch (COMException)
+                    {
+                        ShowMessageBox(
+                            "Toggle Comment is not executable.",
+                            $"{textDocument.Language} files is not supported.",
+                            OLEMSGICON.OLEMSGICON_INFO);
+                    }
                 }
             }
         }

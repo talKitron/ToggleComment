@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -57,6 +56,23 @@ namespace ToggleComment
         protected abstract void Execute(object sender, EventArgs e);
 
         /// <summary>
+        /// メッセージボックスを表示します。
+        /// </summary>
+        /// <param name="title">メッセージのタイトル</param>
+        /// <param name="message">表示するメッセージ</param>
+        /// <param name="icon">表示するアイコン</param>
+        protected void ShowMessageBox(string title, string message, OLEMSGICON icon)
+        {
+            VsShellUtilities.ShowMessageBox(
+                ServiceProvider,
+                message,
+                title,
+                icon,
+                OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        }
+
+        /// <summary>
         /// コマンドを実行した際のコールバックです。
         /// </summary>
         /// <param name="sender">イベントの発行者</param>
@@ -70,27 +86,10 @@ namespace ToggleComment
             catch (Exception ex)
             {
                 ShowMessageBox(
-                    string.Format(CultureInfo.CurrentCulture, "{0} is not executable.", GetType().Name),
-                    string.Format(CultureInfo.CurrentCulture, "{0}: {1}.", ex.GetType().FullName, ex.Message),
+                    $"{GetType().Name} is not executable.",
+                    $"{ex.GetType().FullName}: {ex.Message}.",
                     OLEMSGICON.OLEMSGICON_WARNING);
             }
-        }
-
-        /// <summary>
-        /// メッセージボックスを表示します。
-        /// </summary>
-        /// <param name="title">メッセージのタイトル</param>
-        /// <param name="message">表示するメッセージ</param>
-        /// <param name="icon">表示するアイコン</param>
-        private void ShowMessageBox(string title, string message, OLEMSGICON icon)
-        {
-            VsShellUtilities.ShowMessageBox(
-                ServiceProvider,
-                message,
-                title,
-                icon,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }
