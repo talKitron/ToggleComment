@@ -87,6 +87,8 @@ namespace ToggleComment
             switch (language)
             {
                 case "CSharp":
+                case "C/C++":
+                case "TypeScript":
                     {
                         return new[] { new CodeCommentPattern("//"), new CodeCommentPattern("/*", "*/") };
                     }
@@ -96,9 +98,15 @@ namespace ToggleComment
                     {
                         return new[] { new CodeCommentPattern("<!--", "-->") };
                     }
-                case "JavaScript":
+                case "HTML":
                     {
-                        // MEMO : VS の UncommentSelection コマンドが JavaScript のブロックコメントに対応していない
+                        // MEMO : VS の UncommentSelection コマンドがブロックコメント <%/* */%> に対応していない
+                        return new[] { new CodeCommentPattern("<!--", "-->"), new CodeCommentPattern("<%--", "--%>") };
+                    }
+                case "JavaScript":
+                case "F#":
+                    {
+                        // MEMO : VS の UncommentSelection コマンドが JavaScript, F# のブロックコメントに対応していない
                         return new[] { new CodeCommentPattern("//") };
                     }
                 case "CSS":
