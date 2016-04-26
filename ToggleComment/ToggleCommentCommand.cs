@@ -32,7 +32,7 @@ namespace ToggleComment
         /// <summary>
         /// コメントのパターンです。
         /// </summary>
-        private readonly IDictionary<string, CodeCommentPattern[]> _patterns = new Dictionary<string, CodeCommentPattern[]>();
+        private readonly IDictionary<string, ICodeCommentPattern[]> _patterns = new Dictionary<string, ICodeCommentPattern[]>();
 
         /// <summary>
         /// コマンドメニューグループのIDです。
@@ -83,7 +83,7 @@ namespace ToggleComment
         /// <summary>
         /// コードのコメントを表すパターンを作成します。
         /// </summary>
-        private static CodeCommentPattern[] CreateCommentPatterns(string language)
+        private static ICodeCommentPattern[] CreateCommentPatterns(string language)
         {
             switch (language)
             {
@@ -91,45 +91,45 @@ namespace ToggleComment
                 case "C/C++":
                 case "TypeScript":
                     {
-                        return new[] { new CodeCommentPattern("//"), new CodeCommentPattern("/*", "*/") };
+                        return new ICodeCommentPattern[] { new LineCommentPattern("//"), new BlockCommentPattern("/*", "*/") };
                     }
                 case "XML":
                 case "XAML":
                 case "HTMLX":
                     {
-                        return new[] { new CodeCommentPattern("<!--", "-->") };
+                        return new[] { new BlockCommentPattern("<!--", "-->") };
                     }
                 case "HTML":
                     {
                         // MEMO : VS の UncommentSelection コマンドがブロックコメント <%/* */%> に対応していない
-                        return new[] { new CodeCommentPattern("<!--", "-->"), new CodeCommentPattern("<%--", "--%>") };
+                        return new[] { new BlockCommentPattern("<!--", "-->"), new BlockCommentPattern("<%--", "--%>") };
                     }
                 case "JavaScript":
                 case "F#":
                     {
                         // MEMO : VS の UncommentSelection コマンドが JavaScript, F# のブロックコメントに対応していない
-                        return new[] { new CodeCommentPattern("//") };
+                        return new[] { new LineCommentPattern("//") };
                     }
                 case "CSS":
                     {
-                        return new[] { new CodeCommentPattern("/*", "*/") };
+                        return new[] { new BlockCommentPattern("/*", "*/") };
                     }
                 case "PowerShell":
                     {
                         // MEMO : VS の UncommentSelection コマンドが PowerShell のブロックコメントに対応していない
-                        return new[] { new CodeCommentPattern("#") };
+                        return new[] { new LineCommentPattern("#") };
                     }
                 case "SQL Server Tools":
                     {
-                        return new[] { new CodeCommentPattern("--") };
+                        return new[] { new LineCommentPattern("--") };
                     }
                 case "Basic":
                     {
-                        return new[] { new CodeCommentPattern("'") };
+                        return new[] { new LineCommentPattern("'") };
                     }
                 default:
                     {
-                        return new CodeCommentPattern[0];
+                        return new ICodeCommentPattern[0];
                     }
             }
         }

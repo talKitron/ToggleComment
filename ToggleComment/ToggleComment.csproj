@@ -52,7 +52,9 @@
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Codes\CodeCommentPattern.cs" />
+    <Compile Include="Codes\BlockCommentPattern.cs" />
+    <Compile Include="Codes\ICodeCommentPattern.cs" />
+    <Compile Include="Codes\LineCommentPattern.cs" />
     <Compile Include="CommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToggleCommentCommand.cs" />
