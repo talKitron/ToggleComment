@@ -4,6 +4,7 @@ using System.Linq;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using ToggleComment.Codes;
 using ToggleComment.Utils;
 
 namespace ToggleComment

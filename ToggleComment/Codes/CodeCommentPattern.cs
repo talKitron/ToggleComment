@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ToggleComment
+namespace ToggleComment.Codes
 {
     /// <summary>
     /// コードのコメントを表すパターンです。

@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ToggleComment;
+using ToggleComment.Codes;
 
-namespace Test.ToggleComment
+namespace Test.ToggleComment.Codes
 {
     /// <summary>
     /// <see cref="CodeCommentPattern"/>のテストクラスです。
