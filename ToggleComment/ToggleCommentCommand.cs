@@ -111,14 +111,25 @@ namespace ToggleComment
                     }
                 case "XML":
                 case "XAML":
-                case "HTMLX":
                     {
                         return new[] { new BlockCommentPattern("<!--", "-->") };
+                    }
+                case "HTMLX":
+                    {
+                        // MEMO : HTML に埋め込まれたCSS, JavaScriptをサポートする
+                        return new ICodeCommentPattern[] {
+                            new BlockCommentPattern("<!--", "-->"),
+                            new BlockCommentPattern("/*", "*/"),
+                            new LineCommentPattern("//")};
                     }
                 case "HTML":
                     {
                         // MEMO : VS の UncommentSelection コマンドがブロックコメント <%/* */%> に対応していない
-                        return new[] { new BlockCommentPattern("<!--", "-->"), new BlockCommentPattern("<%--", "--%>") };
+                        return new ICodeCommentPattern[] {
+                            new BlockCommentPattern("<!--", "-->"),
+                            new BlockCommentPattern("<%--", "--%>"),
+                            new BlockCommentPattern("/*", "*/"),
+                            new LineCommentPattern("//")};
                     }
                 case "JavaScript":
                 case "F#":
