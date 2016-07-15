@@ -73,9 +73,11 @@ namespace ToggleComment
                 var patterns = _patterns.GetOrAdd(textDocument.Language, CreateCommentPatterns);
                 if (0 < patterns.Length)
                 {
-                    var text = GetTextOfSelectedLines(textDocument.Selection);
-                    var isComment = patterns.Any(x => x.IsComment(text));
+                    var selection = textDocument.Selection;
+                    SelectLines(selection);
+                    var text = selection.Text;
 
+                    var isComment = patterns.Any(x => x.IsComment(text));
                     var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
                     dte.ExecuteCommand(command);
                 }
@@ -162,16 +164,20 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// 選択中の全ての行のテキストを取得します。
+        /// 選択中の行を行選択状態にします。
         /// </summary>
-        private static string GetTextOfSelectedLines(TextSelection selection)
+        private static void SelectLines(TextSelection selection)
         {
             var startPoint = selection.TopPoint.CreateEditPoint();
             startPoint.StartOfLine();
             var endPoint = selection.BottomPoint.CreateEditPoint();
-            endPoint.EndOfLine();
+            if (endPoint.AtStartOfLine == false)
+            {
+                endPoint.EndOfLine();
+            }
 
-            return startPoint.GetText(endPoint);
+            selection.MoveToPoint(startPoint);
+            selection.MoveToPoint(endPoint, true);
         }
     }
 }
