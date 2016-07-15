@@ -176,6 +176,11 @@ namespace ToggleComment
                 endPoint.EndOfLine();
             }
 
+            if (selection.Mode == vsSelectionMode.vsSelectionModeBox)
+            {
+                selection.Mode = vsSelectionMode.vsSelectionModeStream;
+            }
+
             selection.MoveToPoint(startPoint);
             selection.MoveToPoint(endPoint, true);
         }
