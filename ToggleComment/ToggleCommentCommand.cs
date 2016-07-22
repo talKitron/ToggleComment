@@ -79,15 +79,13 @@ namespace ToggleComment
 
                     var isComment = patterns.Any(x => x.IsComment(text));
                     var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
-                    dte.ExecuteCommand(command);
+
+                    // MEMO : HTML などではComment/Uncommentコマンドの活性状態が切り替わるのが遅く、コマンドを連打すると例外となる場合がある
+                    TryExecuteCommand(dte, command);
                 }
                 else
                 {
-                    try
-                    {
-                        dte.ExecuteCommand(COMMENT_SELECTION_COMMAND);
-                    }
-                    catch (COMException)
+                    if (TryExecuteCommand(dte, COMMENT_SELECTION_COMMAND) == false)
                     {
                         ShowMessageBox(
                             "Toggle Comment is not executable.",
@@ -184,6 +182,24 @@ namespace ToggleComment
 
             selection.MoveToPoint(startPoint);
             selection.MoveToPoint(endPoint, true);
+        }
+
+        /// <summary>
+        /// 指定のコマンドを実行します。
+        /// コマンドが実行不可能な場合は<see langword="false"/>を返します。
+        /// </summary>
+        private bool TryExecuteCommand(DTE2 dte, string command)
+        {
+            try
+            {
+                dte.ExecuteCommand(command);
+                return true;
+            }
+            catch (COMException ex)
+            {
+                const int E_FAIL = unchecked((int)0x80004005);
+                return ex.ErrorCode != E_FAIL;
+            }
         }
     }
 }
