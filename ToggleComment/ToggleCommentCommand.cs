@@ -121,6 +121,7 @@ namespace ToggleComment
                         // MEMO : HTML に埋め込まれたCSS, JavaScriptをサポートする
                         return new ICodeCommentPattern[] {
                             new BlockCommentPattern("<!--", "-->"),
+                            new BlockCommentPattern("@*", "*@"),
                             new BlockCommentPattern("/*", "*/"),
                             new LineCommentPattern("//")};
                     }
