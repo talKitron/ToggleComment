@@ -156,6 +156,10 @@ namespace ToggleComment
                     {
                         return new[] { new LineCommentPattern("'") };
                     }
+                case "Python":
+                    {
+                        return new[] { new LineCommentPattern("#") };
+                    }
                 default:
                     {
                         return new ICodeCommentPattern[0];
