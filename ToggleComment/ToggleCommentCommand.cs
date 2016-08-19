@@ -79,15 +79,12 @@ namespace ToggleComment
 
                     ExecuteCommand(commandId);
                 }
-                else
+                else if (ExecuteCommand(VSConstants.VSStd2KCmdID.COMMENT_BLOCK) == false)
                 {
-                    if (ExecuteCommand(VSConstants.VSStd2KCmdID.COMMENT_BLOCK) == false)
-                    {
-                        ShowMessageBox(
-                            "Toggle Comment is not executable.",
-                            $"{textDocument.Language} files is not supported.",
-                            OLEMSGICON.OLEMSGICON_INFO);
-                    }
+                    ShowMessageBox(
+                        "Toggle Comment is not executable.",
+                        $"{textDocument.Language} files is not supported.",
+                        OLEMSGICON.OLEMSGICON_INFO);
                 }
             }
         }
