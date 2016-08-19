@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using ToggleComment.Codes;
@@ -17,19 +18,14 @@ namespace ToggleComment
     internal sealed class ToggleCommentCommand : CommandBase
     {
         /// <summary>
+        /// コマンドの実行を委譲するインスタンスです。
+        /// </summary>
+        private readonly IOleCommandTarget _commandTarget;
+
+        /// <summary>
         /// コマンドのIDです。
         /// </summary>
         public const int CommandId = 0x0100;
-
-        /// <summary>
-        /// 選択された行をコメントアウトするコマンドです。
-        /// </summary>
-        private const string COMMENT_SELECTION_COMMAND = "Edit.CommentSelection";
-
-        /// <summary>
-        /// 選択された行のコメントを解除するコマンドです。
-        /// </summary>
-        private const string UNCOMMENT_SELECTION_COMMAND = "Edit.UncommentSelection";
 
         /// <summary>
         /// コメントのパターンです。
@@ -52,6 +48,7 @@ namespace ToggleComment
         /// <param name="package">コマンドを提供するパッケージ</param>
         private ToggleCommentCommand(Package package) : base(package, CommandId, CommandSet)
         {
+            _commandTarget = (IOleCommandTarget)ServiceProvider.GetService(typeof(SUIHostCommandDispatcher));
         }
 
         /// <summary>
@@ -78,14 +75,13 @@ namespace ToggleComment
                     var text = selection.Text;
 
                     var isComment = patterns.Any(x => x.IsComment(text));
-                    var command = isComment ? UNCOMMENT_SELECTION_COMMAND : COMMENT_SELECTION_COMMAND;
+                    var commandId = isComment ? VSConstants.VSStd2KCmdID.UNCOMMENT_BLOCK : VSConstants.VSStd2KCmdID.COMMENT_BLOCK;
 
-                    // MEMO : HTML などではComment/Uncommentコマンドの活性状態が切り替わるのが遅く、コマンドを連打すると例外となる場合がある
-                    TryExecuteCommand(dte, command);
+                    ExecuteCommand(commandId);
                 }
                 else
                 {
-                    if (TryExecuteCommand(dte, COMMENT_SELECTION_COMMAND) == false)
+                    if (ExecuteCommand(VSConstants.VSStd2KCmdID.COMMENT_BLOCK) == false)
                     {
                         ShowMessageBox(
                             "Toggle Comment is not executable.",
@@ -167,6 +163,18 @@ namespace ToggleComment
         }
 
         /// <summary>
+        /// 指定のコマンドを実行します。
+        /// コマンドが実行できなかった場合は<see langword="false"/>を返します。
+        /// </summary>
+        private bool ExecuteCommand(VSConstants.VSStd2KCmdID commandId)
+        {
+            var grooupId = VSConstants.VSStd2K;
+            var result = _commandTarget.Exec(ref grooupId, (uint)commandId, 0, IntPtr.Zero, IntPtr.Zero);
+
+            return result == VSConstants.S_OK;
+        }
+
+        /// <summary>
         /// 選択中の行を行選択状態にします。
         /// </summary>
         private static void SelectLines(TextSelection selection)
@@ -186,24 +194,6 @@ namespace ToggleComment
 
             selection.MoveToPoint(startPoint);
             selection.MoveToPoint(endPoint, true);
-        }
-
-        /// <summary>
-        /// 指定のコマンドを実行します。
-        /// コマンドが実行不可能な場合は<see langword="false"/>を返します。
-        /// </summary>
-        private bool TryExecuteCommand(DTE2 dte, string command)
-        {
-            try
-            {
-                dte.ExecuteCommand(command);
-                return true;
-            }
-            catch (COMException ex)
-            {
-                const int E_FAIL = unchecked((int)0x80004005);
-                return ex.ErrorCode != E_FAIL;
-            }
         }
     }
 }
