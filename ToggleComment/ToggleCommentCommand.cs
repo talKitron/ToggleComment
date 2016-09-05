@@ -178,8 +178,9 @@ namespace ToggleComment
         {
             var startPoint = selection.TopPoint.CreateEditPoint();
             startPoint.StartOfLine();
+
             var endPoint = selection.BottomPoint.CreateEditPoint();
-            if (endPoint.AtStartOfLine == false)
+            if (endPoint.AtStartOfLine == false || startPoint.Line == endPoint.Line)
             {
                 endPoint.EndOfLine();
             }
