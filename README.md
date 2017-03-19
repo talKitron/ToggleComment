@@ -4,5 +4,5 @@
 This is a simple visual studio extension to comment/uncomment the selected lines.
 
 ## Getting Started
-See [Visual Studio Gallery](https://marketplace.visualstudio.com/items?itemName=munyabe.ToggleComment) for additional info on how to use this extension.
+See [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=munyabe.ToggleComment) for additional info on how to use this extension.
 
