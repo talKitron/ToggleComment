@@ -64,8 +64,7 @@ namespace ToggleComment
         protected override void Execute(object sender, EventArgs e)
         {
             var dte = (DTE2)ServiceProvider.GetService(typeof(DTE));
-            var textDocument = dte.ActiveDocument.Object("TextDocument") as TextDocument;
-            if (textDocument != null)
+            if (dte?.ActiveDocument.Object("TextDocument") is TextDocument textDocument)
             {
                 var patterns = _patterns.GetOrAdd(textDocument.Language, CreateCommentPatterns);
                 if (0 < patterns.Length)
