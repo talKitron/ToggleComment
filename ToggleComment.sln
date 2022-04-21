@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32414.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToggleComment", "ToggleComment\ToggleComment.csproj", "{EE69DC00-853D-4CFC-B492-C64C0832DBAA}"
 EndProject
@@ -13,16 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Debug|Any CPU.Build.0 = Debug|x64
+		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.ActiveCfg = Release|x64
+		{EE69DC00-853D-4CFC-B492-C64C0832DBAA}.Release|Any CPU.Build.0 = Release|x64
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Debug|Any CPU.Build.0 = Debug|x64
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.ActiveCfg = Release|x64
+		{BC75801F-70D5-4CF6-9CFB-2A1A097B73B7}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BEC0DBB-B425-4539-A217-DB426D3D1378}
 	EndGlobalSection
 EndGlobal
