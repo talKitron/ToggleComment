@@ -41,7 +41,7 @@ The command name is "Edit.ToggleComment".
 - v1.4
 	- Fix a bag that the command might not be executed repeatedly with HTML file.
 - v1.3
-	- Support Python, Razor on ASP.NET MVC.
+	- Support Python, Razor on ASP&#46;NET MVC.
 	- Fix a behavior when only a part of the line was selected.
 	- Fix a selection state of the box selection mode.
 	- Fix a bag that an exception were thrown when Visual Studio original command was invalid.
