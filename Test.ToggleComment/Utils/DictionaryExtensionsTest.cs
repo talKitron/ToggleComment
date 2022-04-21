@@ -5,7 +5,7 @@ using ToggleComment.Utils;
 namespace Test.ToggleComment.Utils
 {
     /// <summary>
-    /// <see cref="DictionaryExtensions"/>のテストクラスです。
+    /// Test class for <see cref="DictionaryExtensions"/>.
     /// </summary>
     [TestClass]
     public class DictionaryExtensionsTest

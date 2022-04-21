@@ -6,17 +6,17 @@ using Microsoft.VisualStudio.Shell.Interop;
 namespace ToggleComment
 {
     /// <summary>
-    /// 拡張機能として登録するコマンドの基底クラスです。
+    /// Base class for commands to be registered as extensions.
     /// </summary>
     internal abstract class CommandBase
     {
         /// <summary>
-        /// コマンドを提供するパッケージです。
+        /// Package providing commands.
         /// </summary>
         private readonly Package _package;
 
         /// <summary>
-        /// サービスプロバイダーを取得します。
+        /// Get the service provider.
         /// </summary>
         protected IServiceProvider ServiceProvider
         {
@@ -24,25 +24,19 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// インスタンスを初期化します。
+        /// Instance initialisation.
         /// </summary>
         /// <remarks>
-        /// コマンドは .vsct ファイルに定義されている必要があります。
+        /// The command must be defined in the .vsct file.
         /// </remarks>
-        /// <param name="package">コマンドを提供するパッケージ</param>
-        /// <param name="commandId">コマンドのID</param>
-        /// <param name="commandSetId">コマンドメニューグループのID</param>
+        /// <param name="package">Package providing the command</param>
+        /// <param name="commandId">ID of the command</param>
+        /// <param name="commandSetId">ID of the command menu group</param>.
         protected CommandBase(Package package, int commandId, Guid commandSetId)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
+            _package = package ?? throw new ArgumentNullException("package");
 
-            _package = package;
-
-            var commandService = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (commandService != null)
+            if (ServiceProvider.GetService(typeof(IMenuCommandService)) is OleMenuCommandService commandService)
             {
                 var menuCommandID = new CommandID(commandSetId, commandId);
                 var menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
@@ -51,16 +45,16 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// コマンドを実行します。
+        /// Command.
         /// </summary>
         protected abstract void Execute(object sender, EventArgs e);
 
         /// <summary>
-        /// メッセージボックスを表示します。
+        /// Display a message box.
         /// </summary>
-        /// <param name="title">メッセージのタイトル</param>
-        /// <param name="message">表示するメッセージ</param>
-        /// <param name="icon">表示するアイコン</param>
+        /// <param name="title">Title of the message</param>
+        /// <param name="message">Message to display</param>
+        /// <param name="icon">Icon to display</param>
         protected void ShowMessageBox(string title, string message, OLEMSGICON icon)
         {
             VsShellUtilities.ShowMessageBox(
@@ -73,10 +67,10 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// コマンドを実行した際のコールバックです。
+        /// Callback when the command is executed.
         /// </summary>
-        /// <param name="sender">イベントの発行者</param>
-        /// <param name="e">イベント引数</param>
+        /// <param name="sender">Event issuer</param>
+        /// <param name="e">event arguments</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
             try

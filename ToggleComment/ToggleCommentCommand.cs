@@ -13,48 +13,48 @@ using ToggleComment.Utils;
 namespace ToggleComment
 {
     /// <summary>
-    /// 選択された行のコメントアウト・解除を行うコマンドです。
+    /// This command is used to comment out/uncomment selected lines.
     /// </summary>
     internal sealed class ToggleCommentCommand : CommandBase
     {
         /// <summary>
-        /// コマンドの実行を委譲するインスタンスです。
+        /// Instances to which the execution of commands is delegated.
         /// </summary>
         private readonly IOleCommandTarget _commandTarget;
 
         /// <summary>
-        /// コマンドのIDです。
+        /// ID of the command.
         /// </summary>
         public const int CommandId = 0x0100;
 
         /// <summary>
-        /// コメントのパターンです。
+        /// Comment Patterns.
         /// </summary>
         private readonly IDictionary<string, ICodeCommentPattern[]> _patterns = new Dictionary<string, ICodeCommentPattern[]>();
 
         /// <summary>
-        /// コマンドメニューグループのIDです。
+        /// Command menu group ID.
         /// </summary>
         public static readonly Guid CommandSet = new Guid("85542055-97d7-4219-a793-8c077b81b25b");
 
         /// <summary>
-        /// シングルトンのインスタンスを取得します。
+        /// Get a singleton instance.
         /// </summary>
         public static ToggleCommentCommand Instance { get; private set; }
 
         /// <summary>
-        /// インスタンスを初期化します。
+        /// Instance initialisation.
         /// </summary>
-        /// <param name="package">コマンドを提供するパッケージ</param>
+        /// <param name="package">The package providing the command</param>.
         private ToggleCommentCommand(Package package) : base(package, CommandId, CommandSet)
         {
             _commandTarget = (IOleCommandTarget)ServiceProvider.GetService(typeof(SUIHostCommandDispatcher));
         }
 
         /// <summary>
-        /// このコマンドのシングルトンのインスタンスを初期化します。
+        /// Initialise a singleton instance of this command.
         /// </summary>
-        /// <param name="package">コマンドを提供するパッケージ</param>
+        /// <param name="package">Package providing the command</param>.
         public static void Initialize(Package package)
         {
             Instance = new ToggleCommentCommand(package);
@@ -89,7 +89,7 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// コードのコメントを表すパターンを作成します。
+        /// Create patterns to represent code comments.
         /// </summary>
         private static ICodeCommentPattern[] CreateCommentPatterns(string language)
         {
@@ -108,7 +108,7 @@ namespace ToggleComment
                     }
                 case "HTMLX":
                     {
-                        // MEMO : HTML に埋め込まれたCSS, JavaScriptをサポートする
+                        // MEMO : Support for CSS, JavaScript embedded in HTML
                         return new ICodeCommentPattern[] {
                             new BlockCommentPattern("<!--", "-->"),
                             new BlockCommentPattern("@*", "*@"),
@@ -117,7 +117,7 @@ namespace ToggleComment
                     }
                 case "HTML":
                     {
-                        // MEMO : VS の UncommentSelection コマンドがブロックコメント <%/* */%> に対応していない
+                        // MEMO : VS UncommentSelection command does not support block comments <%/* */%>.
                         return new ICodeCommentPattern[] {
                             new BlockCommentPattern("<!--", "-->"),
                             new BlockCommentPattern("<%--", "--%>"),
@@ -127,7 +127,7 @@ namespace ToggleComment
                 case "JavaScript":
                 case "F#":
                     {
-                        // MEMO : VS の UncommentSelection コマンドが JavaScript, F# のブロックコメントに対応していない
+                        // MEMO : VS UncommentSelection command does not support JavaScript, F# block comments
                         return new[] { new LineCommentPattern("//") };
                     }
                 case "CSS":
@@ -136,7 +136,7 @@ namespace ToggleComment
                     }
                 case "PowerShell":
                     {
-                        // MEMO : VS の UncommentSelection コマンドが PowerShell のブロックコメントに対応していない
+                        // MEMO : VS UncommentSelection command does not support PowerShell block comments
                         return new[] { new LineCommentPattern("#") };
                     }
                 case "SQL Server Tools":
@@ -159,8 +159,8 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// 指定のコマンドを実行します。
-        /// コマンドが実行できなかった場合は<see langword="false"/>を返します。
+        /// Executes the specified command.
+        /// Returns <see langword="false"/> if the command could not be executed.
         /// </summary>
         private bool ExecuteCommand(VSConstants.VSStd2KCmdID commandId)
         {
@@ -171,7 +171,7 @@ namespace ToggleComment
         }
 
         /// <summary>
-        /// 選択中の行を行選択状態にします。
+        /// Makes the currently selected row into a row selection.
         /// </summary>
         private static void SelectLines(TextSelection selection)
         {

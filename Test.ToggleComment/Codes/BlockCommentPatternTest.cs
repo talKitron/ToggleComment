@@ -5,7 +5,7 @@ using ToggleComment.Codes;
 namespace Test.ToggleComment.Codes
 {
     /// <summary>
-    /// <see cref="BlockCommentPattern"/>のテストクラスです。
+    /// Test class for <see cref="BlockCommentPattern"/>.
     /// </summary>
     [TestClass]
     public class BlockCommentPatternTest

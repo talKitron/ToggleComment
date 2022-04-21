@@ -1,15 +1,15 @@
 ﻿namespace ToggleComment.Codes
 {
     /// <summary>
-    /// コードコメントのパターンを表すインターフェースです。
+    /// The interface representing the code comment pattern.
     /// </summary>
     public interface ICodeCommentPattern
     {
         /// <summary>
-        /// 指定のテキストがコメントかどうかを判定します。
+        /// Determines if the specified text is a comment.
         /// </summary>
-        /// <param name="text">判定対象のテキスト</param>
-        /// <returns>コメントの場合は<see langword = "true" /></returns>
+        /// <param name="text">Text to be judged</param>
+        /// <returns>If it is a comment <see langword = "true" /></returns>
         bool IsComment(string text);
     }
 }

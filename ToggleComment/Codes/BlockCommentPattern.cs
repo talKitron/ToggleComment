@@ -4,30 +4,30 @@ using System.Text.RegularExpressions;
 namespace ToggleComment.Codes
 {
     /// <summary>
-    /// ブロックコメントのパターンを表すクラスです。
+    /// Class representing the block comment pattern.
     /// </summary>
     public class BlockCommentPattern : ICodeCommentPattern
     {
         /// <summary>
-        /// コメントかどうかを判定する正規表現のパターンです。
+        /// Regular expression pattern to determine if it is a comment.
         /// </summary>
         private readonly Regex _regexPattern;
 
         /// <summary>
-        /// コメントの接頭辞として付ける文字列を取得します。
+        /// Gets the string to prefix the comment with.
         /// </summary>
         public string Prefix { get; }
 
         /// <summary>
-        /// コメントの接尾辞として付ける文字列を取得します。
+        /// Gets the string to attach as a suffix to the comment.
         /// </summary>
         public string Suffix { get; }
 
         /// <summary>
-        /// インスタンスを初期化します。
+        /// Instance initialisation.
         /// </summary>
-        /// <param name="prefix">コメントの接頭辞として付ける文字列</param>
-        /// <param name="suffix">コメントの接尾辞として付ける文字列</param>
+        /// <param name="prefix">String to prefix the comment</param>
+        /// <param name="suffix">String to attach as comment suffix</param>.
         public BlockCommentPattern(string prefix, string suffix)
         {
             Prefix = prefix;

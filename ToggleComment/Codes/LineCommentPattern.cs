@@ -5,24 +5,24 @@ using System.Text.RegularExpressions;
 namespace ToggleComment.Codes
 {
     /// <summary>
-    /// 行コメントのパターンを表すクラスです。
+    /// A class representing a line comment pattern.
     /// </summary>
     public class LineCommentPattern : ICodeCommentPattern
     {
         /// <summary>
-        /// コメントかどうかを判定する正規表現のパターンです。
+        /// Regular expression pattern to determine if it is a comment or not.
         /// </summary>
         private readonly Regex _regexPattern;
 
         /// <summary>
-        /// コメントの接頭辞として付ける文字列を取得します。
+        /// Gets the string to prefix the comment with.
         /// </summary>
         public string Prefix { get; }
 
         /// <summary>
-        /// インスタンスを初期化します。
+        /// Instance initialisation.
         /// </summary>
-        /// <param name="prefix">コメントの接頭辞として付ける文字列</param>
+        /// <param name="prefix">String to prefix the comment with</param>.
 
         public LineCommentPattern(string prefix)
         {

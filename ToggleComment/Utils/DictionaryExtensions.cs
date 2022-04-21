@@ -4,20 +4,20 @@ using System.Collections.Generic;
 namespace ToggleComment.Utils
 {
     /// <summary>
-    /// <see cref="IDictionary{TKey, TValue}"/>の拡張メソッドを定義するクラスです。
+    /// This class defines extension methods for <see cref="IDictionary{TKey, TValue}"/>.
     /// </summary>
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// キーがまだ存在しない場合に、<see cref="IDictionary{TKey, TValue}"/>にキーと値のペアを追加します。
+        /// Add key/value pairs to <see cref="IDictionary{TKey, TValue}"/> if the key does not yet exist.
         /// </summary>
-        /// <typeparam name="TKey">キーの型</typeparam>
-        /// <typeparam name="TValue">値の型</typeparam>
-        /// <param name="dictionary">呼出し対象の<see cref="IDictionary{TKey, TValue}"/>インスタンス</param>
-        /// <param name="key">追加する要素のキー</param>
-        /// <param name="addValueFactory">キーの値を生成するために使用される関数</param>
-        /// <returns>キーの値。キーが<paramref name="dictionary"/>に既に存在する場合はキーの既存の値、キーが存在していなかった場合は<paramref name="addValueFactory"/>から返されたキーの新しい値になります。</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dictionary"/>または<paramref name="addValueFactory"/>が<see langword="null"/>です。</exception>
+        /// <typeparam name="TKey">Key type</typeparam>
+        /// <typeparam name="TValue">Value type</typeparam>
+        /// <param name="dictionary">The <see cref="IDictionary{TKey, TValue}"/> instance of the calling object</param>
+        /// <param name="key">Key of the element to be added</param>
+        /// <param name="addValueFactory">Function used to generate the value of the key</param>
+        /// <returns>The value of the key. The existing value of the key if the key already exists in <paramref name="dictionary"/>, or the new value of the key returned from <paramref name="addValueFactory"/> if the key did not exist. </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dictionary"/> or <paramref name="addValueFactory"/> is <see langword="null"/>. </exception>. </exception>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> addValueFactory)
         {
             if (dictionary == null)
